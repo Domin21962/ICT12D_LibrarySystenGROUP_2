@@ -4,110 +4,77 @@
  */
 package views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import controllers.LoginController;
 import javax.swing.*;
-import java.awt.*;
 /**
  *
  * @author User
  */
 public class LoginForm extends javax.swing.JFrame {
-    private JTextField usernameField;
+     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton, registerButton;
+    
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
-         setTitle("Library Login");
-        setSize(400, 500); // Adjusted size
+        setTitle("Login");
+        setSize(300, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
-        
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(null); // Absolute positioning
-        formPanel.setBackground(new Color(200, 200, 255)); // Light purple background
-        
-        JLabel logoLabel = new JLabel(new ImageIcon("C:/Users/User/Downloads/login_form-removebg-preview.png")); // Change path
-        logoLabel.setBounds(120, 20, 150, 150); // Position of the logo
-        formPanel.add(logoLabel);
+        setLayout(null);
 
         JLabel userLabel = new JLabel("Username:");
-        userLabel.setBounds(50, 190, 100, 25);
-        formPanel.add(userLabel);
+        userLabel.setBounds(20, 20, 100, 30);
+        add(userLabel);
 
-        JTextField userField = new JTextField();
-        userField.setBounds(150, 190, 180, 25);
-        formPanel.add(userField);
+        usernameField = new JTextField();
+        usernameField.setBounds(130, 20, 120, 30);
+        add(usernameField);
 
-        // Password Label & Field
         JLabel passLabel = new JLabel("Password:");
-        passLabel.setBounds(50, 230, 100, 25);
-        formPanel.add(passLabel);
+        passLabel.setBounds(20, 60, 100, 30);
+        add(passLabel);
 
-        JPasswordField passField = new JPasswordField();
-        passField.setBounds(150, 230, 180, 25);
-        formPanel.add(passField);
+        passwordField = new JPasswordField();
+        passwordField.setBounds(130, 60, 120, 30);
+        add(passwordField);
 
-        // Login Button
-        JButton loginButton = new JButton("Login >>");
-        loginButton.setBounds(100, 300, 200, 40);
-        loginButton.setFont(new Font("Arial", Font.BOLD, 16));
-        loginButton.setBackground(Color.WHITE);
-        loginButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        formPanel.add(loginButton);
+        loginButton = new JButton("Login");
+        loginButton.setBounds(80, 120, 120, 30);
+        add(loginButton);
 
-        // Register Button (New)
-        JButton registerButton = new JButton("Register");
-        registerButton.setBounds(100, 350, 200, 30);
-        registerButton.setBackground(Color.WHITE);
-        registerButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        formPanel.add(registerButton);
+        // Register Button
+        registerButton = new JButton("Register");
+        registerButton.setBounds(80, 160, 120, 30); // Positioned below Login button
+        add(registerButton);
 
-        // Add formPanel to frame
-        add(formPanel, BorderLayout.CENTER);
-
-        // Event handling
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Login clicked!");
-                // Add login logic here
-            }
-        });
-
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Go to Register Form");
-                // Open RegisterForm here
-            }
-        });
+        loginButton.addActionListener(e -> loginUser());
+        registerButton.addActionListener(e -> openRegisterForm());
 
         setVisible(true);
     }
 
     private void loginUser() {
-        String studentNumber = usernameField.getText();
+        String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
         LoginController controller = new LoginController();
-        if (controller.loginUser(studentNumber, password)) {
+        if (controller.loginUser(username, password)) {
             JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-            new MainForm(studentNumber);
+            this.dispose(); // Close login window and open the main app
+            new MainForm(username); // Opens the main page after login
         } else {
-            JOptionPane.showMessageDialog(this, "Invalid student number or password!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid username or password!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void openRegisterForm() {
-        this.dispose();
-        new RegisterForm();
+        this.dispose(); // Close the login form
+        new RegisterForm(); // Open the register form
     }
+
+    
 
 
     /**
@@ -119,8 +86,53 @@ public class LoginForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
+        jButton1.setText("Login >>");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 200, -1));
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 0, 0));
+        jButton2.setText("Register");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, 160, 30));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Password:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, -1));
+
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Username:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 70, 20));
+
+        jTextField1.setBackground(new java.awt.Color(51, 51, 51));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 160, -1));
+
+        jPasswordField1.setBackground(new java.awt.Color(51, 51, 51));
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 160, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\yy.png")); // NOI18N
+        jLabel4.setText("jLabel4");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 220, 200));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\eee.jpg")); // NOI18N
+        jLabel6.setText("jLabel6");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 570, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -161,5 +173,13 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

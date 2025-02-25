@@ -4,7 +4,6 @@
  */
 package views;
 
-import javax.swing.*;
 /**
  *
  * @author User
@@ -15,24 +14,7 @@ public class StudentInfoForm extends javax.swing.JFrame {
      * Creates new form StudentInfoForm
      */
     public StudentInfoForm() {
-        setTitle("Student Information");
-        setSize(400, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(null);
-
-        JLabel label = new JLabel("Student Information");
-        label.setBounds(140, 50, 200, 30);
-        add(label);
-
-        JButton backButton = new JButton("Back");
-        backButton.setBounds(150, 200, 100, 30);
-        add(backButton);
-        backButton.addActionListener(e -> {
-            this.dispose();
-            new MainForm("12345678"); // Replace with the actual student number
-        });
-
-        setVisible(true);
+        initComponents();
     }
 
     /**

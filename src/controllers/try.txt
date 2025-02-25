@@ -1,0 +1,214 @@
+Got it! You can design your LoginForm and RegisterForm the way you want in Java Swing, and I'll help you connect them to the database and make them work.
+
+Steps to Make Your Design Functional
+Ensure You Have Your Designed Forms
+
+You should have LoginForm.java and RegisterForm.java designed in Java Swing (JFrame, JPanel, etc.).
+Add Action Listeners to Buttons
+
+Example: When clicking "Register," it should open RegisterForm.java.
+Connect to MySQL (XAMPP)
+
+Create DBConnection.java to connect your app to MySQL.
+Implement Login & Registration Logic
+
+Create LoginController.java and RegisterController.java to handle authentication.
+1. Open RegisterForm from LoginForm
+In your LoginForm.java, add this to your Register Button:
+
+java
+Copy
+Edit
+registerButton.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        new RegisterForm().setVisible(true); // Opens Register Form
+        dispose(); // Closes Login Form
+    }
+});
+2. Handle Login Authentication
+In LoginForm.java, add this method:
+
+java
+Copy
+Edit
+private void loginUser() {
+    String studentNumber = studentNumberField.getText();
+    String password = new String(passwordField.getPassword());
+
+    LoginController loginController = new LoginController();
+    if (loginController.authenticateUser(studentNumber, password)) {
+        JOptionPane.showMessageDialog(this, "Login Successful!");
+        new MainForm().setVisible(true);
+        dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid Credentials", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+And attach it to your Login Button:
+
+java
+Copy
+Edit
+loginButton.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        loginUser();
+    }
+});
+3. Handle Registration Logic
+In RegisterForm.java, add this method:
+
+java
+Copy
+Edit
+private void registerUser() {
+    String studentNumber = studentNumberField.getText();
+    String email = emailField.getText();
+    String password = new String(passwordField.getPassword());
+    String confirmPassword = new String(confirmPasswordField.getPassword());
+
+    if (!password.equals(confirmPassword)) {
+        JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    RegisterController registerController = new RegisterController();
+    if (registerController.registerUser(new User(studentNumber, email, password))) {
+        JOptionPane.showMessageDialog(this, "Registration Successful!");
+        new LoginForm().setVisible(true);
+        dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "User already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+And attach it to your Register Button:
+
+java
+Copy
+Edit
+registerButton.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        registerUser();
+    }
+});
+4. Connect to Database (DBConnection.java)
+java
+Copy
+Edit
+package database;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConnection {
+    private static final String URL = "jdbc:mysql://localhost:3306/project";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
+
+    public static Connection getConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
+5. Check Login Credentials (LoginController.java)
+java
+Copy
+Edit
+package controllers;
+import database.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class LoginController {
+    public boolean authenticateUser(String studentNumber, String password) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "SELECT * FROM users WHERE student_number = ? AND password = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, studentNumber);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Returns true if user exists
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}
+6. Register Users (RegisterController.java)
+java
+Copy
+Edit
+package controllers;
+import database.DBConnection;
+import models.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class RegisterController {
+    public boolean registerUser(User user) {
+        try (Connection conn = DBConnection.getConnection()) {
+            if (userExists(user.getStudentNumber(), conn)) return false;
+
+            String query = "INSERT INTO users (student_number, email, password) VALUES (?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, user.getStudentNumber());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+
+            return stmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean userExists(String studentNumber, Connection conn) throws Exception {
+        String query = "SELECT * FROM users WHERE student_number = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, studentNumber);
+        ResultSet rs = stmt.executeQuery();
+        return rs.next();
+    }
+}
+7. MySQL Table for Users
+Run this SQL in XAMPP MySQL:
+
+sql
+Copy
+Edit
+CREATE TABLE users (
+    student_number VARCHAR(20) PRIMARY KEY,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+Modify Your loginUser() Method in LoginForm.java
+Replace your existing loginUser() method with this:
+
+java
+Copy
+Edit
+private void loginUser() {
+    String studentNumber = studentNumberField.getText().trim();
+    String password = new String(passwordField.getPassword()).trim();
+
+    if (studentNumber.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Student Number and Password cannot be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+        return; // Stop the login process
+    }
+
+    LoginController loginController = new LoginController();
+    if (loginController.authenticateUser(studentNumber, password)) {
+        JOptionPane.showMessageDialog(this, "Login Successful!");
+        new MainForm().setVisible(true);
+        dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid Student Number or Password", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
