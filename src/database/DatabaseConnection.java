@@ -12,13 +12,14 @@ import java.sql.SQLException;
  * @author User
  */
 public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/project"; // Change "project" to your database name
-    private static final String USER = "root"; // Default MySQL user in XAMPP
-    private static final String PASSWORD = ""; // No password by default in XAMPP
-public static Connection getConnection() {
-       try {
+    private static final String URL = "jdbc:mysql://localhost:3306/library_db";
+    private static final String USER = "root"; 
+    private static final String PASSWORD = ""; 
+
+    public static Connection getConnection() {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // MySQL JDBC Driver
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", ""); 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             return null;

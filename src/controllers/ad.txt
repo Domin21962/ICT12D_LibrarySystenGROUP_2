@@ -1,0 +1,53 @@
+setTitle("Register");
+        setSize(350, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel studentLabel = new JLabel("Student Number:");
+        studentLabel.setBounds(20, 20, 120, 30);
+        add(studentLabel);
+
+        studentNumberField = new JTextField();
+        studentNumberField.setBounds(140, 20, 150, 30);
+        add(studentNumberField);
+
+        JLabel emailLabel = new JLabel("Email:");
+        emailLabel.setBounds(20, 60, 100, 30);
+        add(emailLabel);
+
+        emailField = new JTextField();
+        emailField.setBounds(140, 60, 150, 30);
+        add(emailField);
+
+        JLabel passLabel = new JLabel("Password:");
+        passLabel.setBounds(20, 100, 100, 30);
+        add(passLabel);
+
+        passwordField = new JPasswordField();
+        passwordField.setBounds(140, 100, 150, 30);
+        add(passwordField);
+
+        JLabel confirmPassLabel = new JLabel("Confirm Password:");
+        confirmPassLabel.setBounds(20, 140, 120, 30);
+        add(confirmPassLabel);
+
+        confirmPasswordField = new JPasswordField();
+        confirmPasswordField.setBounds(140, 140, 150, 30);
+        add(confirmPasswordField);
+
+        registerButton = new JButton("Register");
+        registerButton.setBounds(100, 200, 120, 30);
+        add(registerButton);
+
+        backButton = new JButton("Back to Login");
+        backButton.setBounds(100, 240, 120, 30);
+        add(backButton);
+
+        registerButton.addActionListener(e -> registerUser());
+        backButton.addActionListener(e -> {
+            new LoginForm(); // Close registration form
+            this.dispose(); // Open login form
+        });
+
+        setVisible(true);
+    }
