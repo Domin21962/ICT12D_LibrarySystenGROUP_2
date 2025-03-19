@@ -24,7 +24,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         setTitle("Login");
-        setSize(1010, 540); // Match image size
+        setSize(1027, 580); // Match image size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null); 
@@ -55,7 +55,7 @@ public class LoginForm extends javax.swing.JFrame {
         JLabel passLabel = new JLabel("Password:");
         passLabel.setBounds(140, 250, 70, 20);
         passLabel.setForeground(Color.WHITE);
-        userLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        userLabel.setFont(new Font("Arial", Font.BOLD, 12));
         add(passLabel);
 
         passwordField = new JPasswordField();
@@ -94,6 +94,8 @@ public class LoginForm extends javax.swing.JFrame {
         registerButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(registerButton);
         
+        
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -123,6 +125,7 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Invalid student number or password!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+   
 
     private void openRegisterForm() {
         this.dispose(); // Close Login Form
@@ -152,6 +155,8 @@ public class LoginForm extends javax.swing.JFrame {
         openRegisterForm = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -211,7 +216,13 @@ public class LoginForm extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 110, 20));
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Login.png"))); // NOI18N
+        jButton2.setText("jButton2");
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 500, -1, -1));
+
+        jLabel6.setText("jLabel6");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 470, -1, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Newlogin.png"))); // NOI18N
         jLabel5.setText("jLabel5");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -271,11 +282,13 @@ public class LoginForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

@@ -17,9 +17,8 @@ import models.Book;
  */
 public class MainForm extends javax.swing.JFrame {
     private JTextField searchField;
-    private JButton searchButton, logoutButton, studentInfoButton, bookButton, borrowReturnButton;
-    private JPanel sidebar, mainPanel;
-    private JLabel logoLabel, ccstLabel;
+    private JButton searchButton, logoutButton, studentInfoButton;
+    private JPanel  mainPanel;
 
 
     /**
@@ -27,19 +26,21 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm(String username) {
         setTitle("Library System - Main");
-        setSize(1010, 540);
+        setSize(1027, 580);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         getContentPane().setBackground(new Color(40, 44, 52)); // Background color
         
-        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/Main.png"));
+        
+        
+        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/NEW.png"));
         
         JLabel background = new JLabel();
         background.setIcon(bgIcon);
-        background.setBounds(0, 0, 1010, 540); // Set to image size
+        background.setBounds(0, 0, 1027, 580); // Set to image size
 
         studentInfoButton = new JButton("Student Infomation");
-        studentInfoButton.setBounds(-30, 90, 190, 30);
+        studentInfoButton.setBounds(-10, 130, 190, 30);
         studentInfoButton.setFont(new Font("Arial", Font.BOLD, 13));
         studentInfoButton.setForeground(new Color(221,221,221));
         studentInfoButton.setBorderPainted(false);
@@ -50,7 +51,7 @@ public class MainForm extends javax.swing.JFrame {
         studentInfoButton.addActionListener(e -> new StudentInfoForm().setVisible(true));
         
         logoutButton = new JButton("Logout");
-        logoutButton.setBounds(-23, 450, 100, 30);
+        logoutButton.setBounds(40, 475, 100, 30);
         logoutButton.setFont(new Font("Arial", Font.BOLD, 13));
         logoutButton.setForeground(new Color(221,221,221));
         logoutButton.setBorderPainted(false);
@@ -77,9 +78,10 @@ public class MainForm extends javax.swing.JFrame {
 
         // Main Panel (For displaying books)
         mainPanel = new JPanel();
-        mainPanel.setBounds(160, 60, 850, 460);
+        mainPanel.setBounds(172, 60, 851, 481);
         mainPanel.setBackground(new Color(45, 49, 56));
         add(mainPanel);
+        
 
         // Event Listeners
         searchButton.addActionListener(new ActionListener() {
@@ -106,12 +108,14 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void searchBook(String keyword) {
-    BookController bookController = new BookController();
+     BookController bookController = new BookController();
     ArrayList<Book> books = bookController.searchBooks(keyword);
+    
     System.out.println("🔍 Books Found in searchBook(): " + books.size());
 
     mainPanel.removeAll(); // Clear previous content
     mainPanel.setLayout(new BorderLayout());
+    mainPanel.setPreferredSize(new Dimension(900, 500));
 
     if (books.isEmpty()) {
         JLabel noResults = new JLabel("No books found!", SwingConstants.CENTER);
@@ -123,12 +127,14 @@ public class MainForm extends javax.swing.JFrame {
         bookListPanel.setLayout(new BoxLayout(bookListPanel, BoxLayout.Y_AXIS));
         bookListPanel.setBackground(new Color(45, 49, 56));
 
-        
         for (Book book : books) {
             JPanel bookPanel = new JPanel();
             bookPanel.setLayout(new BoxLayout(bookPanel, BoxLayout.Y_AXIS));
             bookPanel.setBackground(new Color(45, 49, 56));
             bookPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            
+            
+            
 
             JLabel titleLabel = new JLabel("Title: " + book.getTitle());
             titleLabel.setForeground(Color.WHITE);
@@ -144,18 +150,26 @@ public class MainForm extends javax.swing.JFrame {
             contentArea.setBackground(new Color(50, 55, 60));
             contentArea.setForeground(Color.WHITE);
 
-            JScrollPane scrollPane = new JScrollPane(contentArea);
-            scrollPane.setPreferredSize(new Dimension(800, 300));
+            JScrollPane contentScrollPane = new JScrollPane(contentArea);
+            contentScrollPane.setPreferredSize(new Dimension(800, 300));
+            contentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            contentScrollPane.getVerticalScrollBar().setUnitIncrement(16); // Smooth scrolling
 
             bookPanel.add(titleLabel);
             bookPanel.add(authorLabel);
-            bookPanel.add(scrollPane);
+            bookPanel.add(contentScrollPane);
 
             bookListPanel.add(bookPanel);
         }
 
         JScrollPane listScrollPane = new JScrollPane(bookListPanel);
         listScrollPane.setPreferredSize(new Dimension(850, 400));
+        listScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        listScrollPane.getVerticalScrollBar().setUnitIncrement(16); // Enables smooth scrolling
+
+        // Allow scrolling with arrow keys & page up/down
+        listScrollPane.setFocusable(true);
+        listScrollPane.requestFocusInWindow();
 
         mainPanel.add(listScrollPane, BorderLayout.CENTER);
     }

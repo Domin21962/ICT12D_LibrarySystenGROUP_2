@@ -22,26 +22,36 @@ public class BookController {
     }
 
     public ArrayList<Book> searchBooks(String keyword) {
-    ArrayList<Book> books = new ArrayList<>();
+     ArrayList<Book> books = new ArrayList<>();
     System.out.println("🔍 Searching books with keyword: " + keyword);
-    
-     try {
+
+    try {
+        // Search books by title, author, or genre
         String sql = "SELECT book_id, title, author, year, genre, publisher, book_content " +
                      "FROM book " +
-                     "WHERE title LIKE ? OR author LIKE ?";
+                     "WHERE title LIKE ? OR author LIKE ? OR genre LIKE ? " +
+                     "ORDER BY CASE " +
+                     "WHEN title LIKE ? THEN 1 " +
+                     "WHEN author LIKE ? THEN 2 " +
+                     "WHEN genre LIKE ? THEN 3 " +
+                     "ELSE 4 END";
 
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, "%" + keyword + "%");
         stmt.setString(2, "%" + keyword + "%");
+        stmt.setString(3, "%" + keyword + "%");
+        stmt.setString(4, "%" + keyword + "%");
+        stmt.setString(5, "%" + keyword + "%");
+        stmt.setString(6, "%" + keyword + "%");
 
-        System.out.println("📌 SQL Query: " + stmt.toString()); // Print SQL query for debugging
+        System.out.println(" SQL Query: " + stmt.toString()); // Debugging
 
         ResultSet rs = stmt.executeQuery();
 
         int count = 0;
         while (rs.next()) {
             count++;
-            System.out.println("📚 Book Found: " + rs.getString("title") + " | Content: " + rs.getString("book_content"));
+            System.out.println(" Book Found: " + rs.getString("title") + " | Genre: " + rs.getString("genre"));
 
             books.add(new Book(
                 rs.getInt("book_id"),
@@ -50,13 +60,41 @@ public class BookController {
                 rs.getInt("year"),
                 rs.getString("genre"),
                 rs.getString("publisher"),
-                rs.getString("book_content") // Use book_content instead of content
+                rs.getString("book_content")
             ));
         }
-        System.out.println("✅ Total Books Found: " + count);
+
+        // If no direct matches, recommend books from the same genre
+        if (count == 0) {
+            System.out.println(" No exact match found. Recommending books from the same genre...");
+
+            String genreQuery = "SELECT book_id, title, author, year, genre, publisher, book_content " +
+                                "FROM book WHERE genre LIKE ? LIMIT 5"; // Get 5 recommended books
+
+            PreparedStatement genreStmt = conn.prepareStatement(genreQuery);
+            genreStmt.setString(1, "%" + keyword + "%");
+
+            ResultSet genreRs = genreStmt.executeQuery();
+
+            while (genreRs.next()) {
+                System.out.println("⭐ Recommended Book: " + genreRs.getString("title"));
+
+                books.add(new Book(
+                    genreRs.getInt("book_id"),
+                    genreRs.getString("title"),
+                    genreRs.getString("author"),
+                    genreRs.getInt("year"),
+                    genreRs.getString("genre"),
+                    genreRs.getString("publisher"),
+                    genreRs.getString("book_content")
+                ));
+            }
+        }
+
+        System.out.println(" Total Books Found: " + books.size());
 
     } catch (SQLException e) {
-        System.out.println("❌ SQL Error: " + e.getMessage());
+        System.out.println(" SQL Error: " + e.getMessage());
         e.printStackTrace();
     }
     return books;
