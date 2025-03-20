@@ -11,15 +11,16 @@ import models.Book;
  * @author User
  */
 public class BookController {
-    private Connection conn;
+   private Connection conn;
 
     public BookController() {
-        try {
+          try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/library_db", "root", "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
 
     public ArrayList<Book> searchBooks(String keyword) {
      ArrayList<Book> books = new ArrayList<>();
@@ -99,4 +100,44 @@ public class BookController {
     }
     return books;
 }
+    public boolean addBook(String title, String author, int year, String genre, String publisher, String content) {
+    try {
+        String sql = "INSERT INTO book (title, author, year, genre, publisher, book_content) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, title);
+        stmt.setString(2, author);
+        stmt.setInt(3, year);
+        stmt.setString(4, genre);
+        stmt.setString(5, publisher);
+        stmt.setString(6, content);
+
+        int rowsInserted = stmt.executeUpdate();
+        return rowsInserted > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+public boolean removeBook(int bookId) {
+    try {
+        String sql = "DELETE FROM book WHERE book_id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, bookId);
+
+        int rowsDeleted = stmt.executeUpdate();
+        return rowsDeleted > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+    public void updateBook(Book book) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Book findBook(String bookTitle) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

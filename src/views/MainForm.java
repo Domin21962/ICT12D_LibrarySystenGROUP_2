@@ -17,14 +17,17 @@ import models.Book;
  */
 public class MainForm extends javax.swing.JFrame {
     private JTextField searchField;
-    private JButton searchButton, logoutButton, studentInfoButton;
+    private JButton searchButton, logoutButton, userInfoButton,addBookButton, removeBookButton;;
     private JPanel  mainPanel;
+    private String userRole;
+
 
 
     /**
      * Creates new form MainMenu
      */
     public MainForm(String username) {
+        this.userRole = getUserRole(username);
         setTitle("Library System - Main");
         setSize(1027, 580);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,16 +42,16 @@ public class MainForm extends javax.swing.JFrame {
         background.setIcon(bgIcon);
         background.setBounds(0, 0, 1027, 580); // Set to image size
 
-        studentInfoButton = new JButton("Student Infomation");
-        studentInfoButton.setBounds(-10, 130, 190, 30);
-        studentInfoButton.setFont(new Font("Arial", Font.BOLD, 13));
-        studentInfoButton.setForeground(new Color(221,221,221));
-        studentInfoButton.setBorderPainted(false);
-        studentInfoButton.setContentAreaFilled(false);
-        studentInfoButton.setFocusPainted(false);
-        studentInfoButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        add(studentInfoButton);
-        studentInfoButton.addActionListener(e -> new StudentInfoForm().setVisible(true));
+        userInfoButton = new JButton(" Infomation");
+        userInfoButton.setBounds(-10, 130, 190, 30);
+        userInfoButton.setFont(new Font("Arial", Font.BOLD, 13));
+        userInfoButton.setForeground(new Color(221,221,221));
+        userInfoButton.setBorderPainted(false);
+        userInfoButton.setContentAreaFilled(false);
+        userInfoButton.setFocusPainted(false);
+        userInfoButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        add(userInfoButton);
+        userInfoButton.addActionListener(e -> new StudentInfoForm().setVisible(true));
         
         logoutButton = new JButton("Logout");
         logoutButton.setBounds(40, 475, 100, 30);
@@ -82,6 +85,9 @@ public class MainForm extends javax.swing.JFrame {
         mainPanel.setBackground(new Color(45, 49, 56));
         add(mainPanel);
         
+        if (userRole.equals("Admin")) {
+        addAdminControls();
+        }
 
         // Event Listeners
         searchButton.addActionListener(new ActionListener() {
@@ -102,6 +108,22 @@ public class MainForm extends javax.swing.JFrame {
         setVisible(true);
     }
     // Simulated search function
+    
+    
+    
+
+ 
+// Function to determine the user role
+    private String getUserRole(String username) {
+    if (username.startsWith("AM.")) {
+        return "Admin";
+    } else if (username.startsWith("TC.")) {
+        return "Teacher";
+    } else if (username.startsWith("SD.")) {
+        return "Student";
+    }
+    return "Unknown";
+    }
 
     private MainForm() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -128,39 +150,46 @@ public class MainForm extends javax.swing.JFrame {
         bookListPanel.setBackground(new Color(45, 49, 56));
 
         for (Book book : books) {
-            JPanel bookPanel = new JPanel();
-            bookPanel.setLayout(new BoxLayout(bookPanel, BoxLayout.Y_AXIS));
-            bookPanel.setBackground(new Color(45, 49, 56));
-            bookPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            
-            
-            
+    JPanel bookPanel = new JPanel();
+    bookPanel.setLayout(new BoxLayout(bookPanel, BoxLayout.Y_AXIS));
+    bookPanel.setBackground(new Color(45, 49, 56));
+    bookPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            JLabel titleLabel = new JLabel("Title: " + book.getTitle());
-            titleLabel.setForeground(Color.WHITE);
-            titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+    // 📌 Book ID Label
+    JLabel idLabel = new JLabel("ID: " + book.getBookId());
+    idLabel.setForeground(Color.CYAN);  // Cyan color for better visibility
+    idLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-            JLabel authorLabel = new JLabel("Author: " + book.getAuthor());
-            authorLabel.setForeground(Color.LIGHT_GRAY);
+    // 📖 Title Label
+    JLabel titleLabel = new JLabel("Title: " + book.getTitle());
+    titleLabel.setForeground(Color.WHITE);
+    titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
-            JTextArea contentArea = new JTextArea(book.getContent());
-            contentArea.setLineWrap(true);
-            contentArea.setWrapStyleWord(true);
-            contentArea.setEditable(false);
-            contentArea.setBackground(new Color(50, 55, 60));
-            contentArea.setForeground(Color.WHITE);
+    // ✍️ Author Label
+    JLabel authorLabel = new JLabel("Author: " + book.getAuthor());
+    authorLabel.setForeground(Color.LIGHT_GRAY);
 
-            JScrollPane contentScrollPane = new JScrollPane(contentArea);
-            contentScrollPane.setPreferredSize(new Dimension(800, 300));
-            contentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            contentScrollPane.getVerticalScrollBar().setUnitIncrement(16); // Smooth scrolling
+    // 📜 Content Area
+    JTextArea contentArea = new JTextArea(book.getContent());
+    contentArea.setLineWrap(true);
+    contentArea.setWrapStyleWord(true);
+    contentArea.setEditable(false);
+    contentArea.setBackground(new Color(50, 55, 60));
+    contentArea.setForeground(Color.WHITE);
 
-            bookPanel.add(titleLabel);
-            bookPanel.add(authorLabel);
-            bookPanel.add(contentScrollPane);
+    JScrollPane contentScrollPane = new JScrollPane(contentArea);
+    contentScrollPane.setPreferredSize(new Dimension(800, 300));
+    contentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    contentScrollPane.getVerticalScrollBar().setUnitIncrement(16); // Smooth scrolling
 
-            bookListPanel.add(bookPanel);
-        }
+    // 🏗️ Add components to book panel
+    bookPanel.add(idLabel);
+    bookPanel.add(titleLabel);
+    bookPanel.add(authorLabel);
+    bookPanel.add(contentScrollPane);
+
+    bookListPanel.add(bookPanel);
+}
 
         JScrollPane listScrollPane = new JScrollPane(bookListPanel);
         listScrollPane.setPreferredSize(new Dimension(850, 400));
@@ -176,6 +205,31 @@ public class MainForm extends javax.swing.JFrame {
 
     mainPanel.revalidate();
     mainPanel.repaint();
+}
+    private void addAdminControls() {
+    addBookButton = new JButton("Add Book");
+    addBookButton.setBounds(40, 400, 120, 30);
+    addBookButton.setFont(new Font("Arial", Font.BOLD, 13));
+    addBookButton.setForeground(new Color(221, 221, 221));
+    addBookButton.setBorderPainted(false);
+    addBookButton.setContentAreaFilled(false);
+    addBookButton.setFocusPainted(false);
+    addBookButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    add(addBookButton);
+
+    removeBookButton = new JButton("Remove Book");
+    removeBookButton.setBounds(40, 440, 120, 30);
+    removeBookButton.setFont(new Font("Arial", Font.BOLD, 13));
+    removeBookButton.setForeground(new Color(221, 221, 221));
+    removeBookButton.setBorderPainted(false);
+    removeBookButton.setContentAreaFilled(false);
+    removeBookButton.setFocusPainted(false);
+    removeBookButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    add(removeBookButton);
+
+    // Event Listeners
+    addBookButton.addActionListener(e -> new AddBookForm().setVisible(true));
+    removeBookButton.addActionListener(e -> new RemoveBookForm().setVisible(true));
 }
 
 
@@ -290,4 +344,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+
 }

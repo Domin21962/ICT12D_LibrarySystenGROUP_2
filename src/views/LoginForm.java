@@ -14,7 +14,7 @@ import javax.swing.border.MatteBorder;
  * @author User
  */
 public class LoginForm extends javax.swing.JFrame {
-    private JTextField studentNumberField;
+    private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton, registerButton;
 
@@ -36,20 +36,20 @@ public class LoginForm extends javax.swing.JFrame {
         background.setIcon(bgIcon);
         background.setBounds(0, 0, 1010, 540); // Set to image size
 
-        JLabel userLabel = new JLabel("Student Number:");
+        JLabel userLabel = new JLabel("Username:");
         userLabel.setBounds(140, 180, 100, 20);
         userLabel.setFont(new Font("Arial", Font.BOLD, 12));
         userLabel.setForeground(Color.WHITE);
         add(userLabel);
 
-        studentNumberField = new JTextField();
-        studentNumberField.setBounds(140, 200, 270, 20);
-        studentNumberField.setOpaque(false);
-        studentNumberField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
-        studentNumberField.setForeground(Color.WHITE);
-        studentNumberField.setFont(new Font("Arial", Font.PLAIN, 12));
-        studentNumberField.setCaretColor(Color.WHITE);
-        add(studentNumberField);
+        usernameField = new JTextField();
+        usernameField.setBounds(140, 200, 270, 20);
+        usernameField.setOpaque(false);
+        usernameField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
+        usernameField.setForeground(Color.WHITE);
+        usernameField.setFont(new Font("Arial", Font.PLAIN, 12));
+        usernameField.setCaretColor(Color.WHITE);
+        add(usernameField);
 
 
         JLabel passLabel = new JLabel("Password:");
@@ -113,18 +113,18 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     private void loginUser() {
-        String username = studentNumberField.getText();
-        String password = new String(passwordField.getPassword());
+    String username = usernameField.getText();
+    String password = new String(passwordField.getPassword());
 
-        LoginController controller = new LoginController();
-        if (controller.loginUser(username, password)) {
-            JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose(); // Close login window and open the main app
-            new MainForm(username); // Opens the main page after login
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid student number or password!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    LoginController controller = new LoginController();
+    if (controller.loginUser(username, password)) {
+        JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+        new MainForm(username); // Pass the username to the main form
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid username or password!", "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
    
 
     private void openRegisterForm() {

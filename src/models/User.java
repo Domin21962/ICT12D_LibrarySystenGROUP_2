@@ -9,25 +9,28 @@ package models;
  * @author User
  */
 public class User {
-    private String studentNumber;
+    private String username;
     private String email;
     private String password;
+    private String role; 
 
-    public User(String studentNumber, String email, String password) {
-        this.studentNumber = studentNumber;
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
+        this.role = determineRole(username); // Assign role based on username
     }
 
-    public String getStudentNumber() {
-        return studentNumber;
+    private String determineRole(String username) {
+        if (username.startsWith("SD.")) return "Student";
+        if (username.startsWith("AM.")) return "Admin";
+        if (username.startsWith("TC.")) return "Teacher";
+        return "Unknown";
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
+    public String getUsername() { return username; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public String getRole() { return role; }
 }
+

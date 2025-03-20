@@ -16,7 +16,7 @@ import javax.swing.border.MatteBorder;
  * @author User
  */
 public class RegisterForm extends javax.swing.JFrame {
-    private JTextField studentNumberField, emailField;
+    private JTextField usernameField, emailField;
     private JPasswordField passwordField, confirmPasswordField;
     private JButton registerButton, backButton;
 
@@ -40,20 +40,20 @@ public class RegisterForm extends javax.swing.JFrame {
         JLabel background = new JLabel(bgIcon);
         background.setBounds(0, 0, 1010, 540);
 
-        JLabel userLabel = new JLabel("Student Number:");
+        JLabel userLabel = new JLabel("Username");
         userLabel.setBounds(130, 180, 100, 20);
         userLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         userLabel.setForeground(Color.WHITE);
         add(userLabel);
 
-        studentNumberField = new JTextField();
-        studentNumberField.setBounds(130, 200, 240, 20);
-        studentNumberField.setOpaque(false);
-        studentNumberField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
-        studentNumberField.setForeground(Color.WHITE);
-        studentNumberField.setFont(new Font("Arial", Font.PLAIN, 12));
-        studentNumberField.setCaretColor(Color.WHITE);
-        add(studentNumberField);
+        usernameField = new JTextField();
+        usernameField.setBounds(130, 200, 240, 20);
+        usernameField.setOpaque(false);
+        usernameField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
+        usernameField.setForeground(Color.WHITE);
+        usernameField.setFont(new Font("Arial", Font.PLAIN, 12));
+        usernameField.setCaretColor(Color.WHITE);
+        add(usernameField);
 
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setBounds(130, 220, 100, 30);
@@ -136,33 +136,36 @@ public class RegisterForm extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    private void registerUser() {
-        String studentNumber = studentNumberField.getText();
-        String email = emailField.getText();
-        String password = new String(passwordField.getPassword());
-        String confirmPassword = new String(confirmPasswordField.getPassword());
+    private boolean isValidUsername(String username) {
+    return username.matches("^(TC|SD|AM)\\.[a-zA-Z]+$"); // Ensures "SD.Name", "TC.Name", "AM.Name"
+}
 
-        if (password.equals(confirmPassword)) {
-            RegisterController controller = new RegisterController();
-            User user = new User(studentNumber, email, password);
+private void registerUser() {
+    String username = usernameField.getText();
+    String email = emailField.getText();
+    String password = new String(passwordField.getPassword());
+    String confirmPassword = new String(confirmPasswordField.getPassword());
 
-            if (controller.registerUser(user)) {
-                JOptionPane.showMessageDialog(this, "Registration successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-                new LoginForm();
-            } else {
-                JOptionPane.showMessageDialog(this, "Student number already exists!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+    if (!isValidUsername(username)) {
+        JOptionPane.showMessageDialog(this, "Username must follow the format: TC.Name, SD.Name, AM.Name", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (password.equals(confirmPassword)) {
+        RegisterController controller = new RegisterController();
+        User user = new User(username, email, password);
+
+        if (controller.registerUser(user)) {
+            JOptionPane.showMessageDialog(this, "Registration successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            new LoginForm();
         } else {
-            JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username already exists!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
     }
-
-    private void openLoginForm() {
-        this.dispose();
-        LoginForm loginForm = new LoginForm();
-        loginForm.setVisible(true);
-    }
+}
 
 
 
@@ -326,6 +329,10 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
+
+    private void openLoginForm() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     }
 
