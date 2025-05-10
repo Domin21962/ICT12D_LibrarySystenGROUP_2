@@ -28,7 +28,7 @@ public class AddBookForm extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-
+//dadada
         // Set background
         ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/DA.png"));
         Image img = bgIcon.getImage().getScaledInstance(600, 500, Image.SCALE_SMOOTH);
