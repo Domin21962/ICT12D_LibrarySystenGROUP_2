@@ -7,6 +7,8 @@ package views;
 import controllers.BookController;
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.border.MatteBorder;
+
 /**
  *
  * @author User
@@ -15,61 +17,102 @@ public class AddBookForm extends javax.swing.JFrame {
     private JTextField titleField, authorField, yearField, genreField, publisherField;
     private JTextArea contentArea;
     private JButton addButton;
+    private JLabel background;
 
     /**
      * Creates new form AddBookForm
      */
     public AddBookForm() {
         setTitle("Add Book");
-        setSize(400, 400);
-        setLayout(new GridLayout(6, 2));
+        setSize(600, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null);
 
-        add(new JLabel("Title:"));
-        titleField = new JTextField();
+        // Set background
+        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/DA.png"));
+        Image img = bgIcon.getImage().getScaledInstance(600, 500, Image.SCALE_SMOOTH);
+        background = new JLabel(new ImageIcon(img));
+        background.setBounds(0, 0, 600, 500);
+
+        Color borderColor = new Color(0, 102, 153); // Dark blue
+        Color textColor = Color.WHITE;
+
+        // Title
+        titleField = createStyledTextField(200, 126, 250, 20, borderColor, textColor);
         add(titleField);
 
-        add(new JLabel("Author:"));
-        authorField = new JTextField();
+        // Author
+        authorField = createStyledTextField(200, 186, 250, 20, borderColor, textColor);
         add(authorField);
 
-        add(new JLabel("Year:"));
-        yearField = new JTextField();
+        // Year
+        yearField = createStyledTextField(200, 244, 250, 20, borderColor, textColor);
         add(yearField);
 
-        add(new JLabel("Genre:"));
-        genreField = new JTextField();
+        // Genre
+        genreField = createStyledTextField(200, 305, 250, 20, borderColor, textColor);
         add(genreField);
 
-        add(new JLabel("Publisher:"));
-        publisherField = new JTextField();
+        // Publisher
+        publisherField = createStyledTextField(200, 363, 250, 20, borderColor, textColor);
         add(publisherField);
 
-        add(new JLabel("Content:"));
+        // Content
         contentArea = new JTextArea();
-        add(new JScrollPane(contentArea));
+        contentArea.setBounds(200, 400, 250, 60);
+        contentArea.setFont(new Font("Arial", Font.PLAIN, 12));
+        contentArea.setForeground(textColor);
+        contentArea.setOpaque(false);
+        contentArea.setBorder(new MatteBorder(0, 0, 1, 0, borderColor));
+        contentArea.setCaretColor(textColor);
+        add(contentArea);
 
+        // Add Button
         addButton = new JButton("Add Book");
+        addButton.setBounds(430, 400, 10, 40);
+        addButton.setFont(new Font("Arial", Font.BOLD, 12));
+        addButton.setForeground(Color.WHITE);
+        addButton.setBackground(new Color(0, 51, 102));
+        addButton.setFocusPainted(false);
         add(addButton);
 
+        // Event
         addButton.addActionListener(e -> addBook());
 
+        add(background);
         setVisible(true);
     }
 
-    private void addBook() {
-        String title = titleField.getText();
-        String author = authorField.getText();
-        int year = Integer.parseInt(yearField.getText());
-        String genre = genreField.getText();
-        String publisher = publisherField.getText();
-        String content = contentArea.getText();
+    private JTextField createStyledTextField(int x, int y, int w, int h, Color borderColor, Color textColor) {
+        JTextField field = new JTextField();
+        field.setBounds(x, y, w, h);
+        field.setOpaque(false);
+        field.setForeground(textColor);
+        field.setCaretColor(textColor);
+        field.setFont(new Font("Arial", Font.PLAIN, 12));
+        field.setBorder(new MatteBorder(0, 0, 1, 0, borderColor));
+        return field;
+    }
 
-        BookController bookController = new BookController();
-        if (bookController.addBook(title, author, year, genre, publisher, content)) {
-            JOptionPane.showMessageDialog(this, "Book added successfully!");
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Error adding book.");
+    private void addBook() {
+        try {
+            String title = titleField.getText();
+            String author = authorField.getText();
+            int year = Integer.parseInt(yearField.getText());
+            String genre = genreField.getText();
+            String publisher = publisherField.getText();
+            String content = contentArea.getText();
+
+            BookController bookController = new BookController();
+            if (bookController.addBook(title, author, year, genre, publisher, content)) {
+                JOptionPane.showMessageDialog(this, "Book added successfully!");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error adding book.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid year.");
         }
     }
 

@@ -8,7 +8,6 @@ import controllers.LoginController;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.MatteBorder;
-
 /**
  *
  * @author User
@@ -30,46 +29,46 @@ public class LoginForm extends javax.swing.JFrame {
         setLayout(null); 
         
         // Load Background Image
-        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/Login.png"));
+        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/LAGIN.png"));
         
         JLabel background = new JLabel();
         background.setIcon(bgIcon);
         background.setBounds(0, 0, 1010, 540); // Set to image size
 
         JLabel userLabel = new JLabel("Username:");
-        userLabel.setBounds(140, 180, 100, 20);
+        userLabel.setBounds(300, 180, 100, 20);
         userLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        userLabel.setForeground(Color.WHITE);
+        userLabel.setForeground(Color.BLACK);
         add(userLabel);
 
         usernameField = new JTextField();
-        usernameField.setBounds(140, 200, 270, 20);
+        usernameField.setBounds(300, 200, 330, 20);
         usernameField.setOpaque(false);
-        usernameField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
-        usernameField.setForeground(Color.WHITE);
+        usernameField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(30,30,30)));
+        usernameField.setForeground(Color.BLACK);
         usernameField.setFont(new Font("Arial", Font.PLAIN, 12));
-        usernameField.setCaretColor(Color.WHITE);
+        usernameField.setCaretColor(Color.BLACK);
         add(usernameField);
 
 
         JLabel passLabel = new JLabel("Password:");
-        passLabel.setBounds(140, 250, 70, 20);
-        passLabel.setForeground(Color.WHITE);
+        passLabel.setBounds(300, 250, 70, 20);
+        passLabel.setForeground(Color.BLACK);
         userLabel.setFont(new Font("Arial", Font.BOLD, 12));
         add(passLabel);
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(140, 270, 270, 20);
+        passwordField.setBounds(300, 270, 330, 20);
         passwordField.setOpaque(false);
-        passwordField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
-        passwordField.setForeground(Color.WHITE);
+        passwordField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(30,30,30)));
+        passwordField.setForeground(Color.BLACK);
         passwordField.setFont(new Font("Arial", Font.PLAIN, 12));
-        passwordField.setCaretColor(Color.WHITE);
+        passwordField.setCaretColor(Color.BLACK);
         add(passwordField);
 
         
         loginButton = new JButton("Log in >>");
-        loginButton.setBounds(170, 310, 200, 20);
+        loginButton.setBounds(370, 310, 200, 20);
         loginButton.setFont(new Font("Arial", Font.BOLD, 13));
         loginButton.setBackground(new Color(0, 191, 255));
         loginButton.setForeground(Color.WHITE);
@@ -80,14 +79,14 @@ public class LoginForm extends javax.swing.JFrame {
         loginButton.setBackground(new Color(0, 191, 255));
         
         JLabel courage = new JLabel("Don't have account?");
-        courage.setBounds(220, 360, 150, 16);
-        courage.setForeground(Color.WHITE);
+        courage.setBounds(415, 360, 150, 16);
+        courage.setForeground(Color.BLACK);
         add(courage);
 
         registerButton = new JButton("Sign up now");
-        registerButton.setBounds(230, 380, 100, 27);
+        registerButton.setBounds(423, 380, 100, 27);
         registerButton.setFont(new Font("Arial", Font.PLAIN, 13));
-        registerButton.setForeground(new Color(0,204,204));
+        registerButton.setForeground(new Color(30,30,30));
         registerButton.setBorderPainted(false);
         registerButton.setContentAreaFilled(false);
         registerButton.setFocusPainted(false);
@@ -109,6 +108,7 @@ public class LoginForm extends javax.swing.JFrame {
         loginButton.addActionListener(e -> loginUser());
 
         add(background);
+        setResizable(false);
         setVisible(true);
     }
 

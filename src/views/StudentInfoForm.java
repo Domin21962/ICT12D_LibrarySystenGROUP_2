@@ -4,6 +4,13 @@
  */
 package views;
 
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 /**
  *
  * @author User
@@ -14,8 +21,64 @@ public class StudentInfoForm extends javax.swing.JFrame {
      * Creates new form StudentInfoForm
      */
     public StudentInfoForm() {
-        initComponents();
+        setTitle("Login");
+        setSize(510, 355); // Match image size
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null); 
+        
+        // Load Background Image
+        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/sda.png"));
+        JLabel background = new JLabel();
+        background.setIcon(bgIcon);
+        background.setBounds(0, 0, 510, 355); // Set to image size
+        
+        // Labels
+        JLabel userLabel = new JLabel("Username:");
+        userLabel.setBounds(100, 100, 100, 20);
+        userLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        userLabel.setForeground(Color.BLACK);
+        add(userLabel);
+
+        JLabel passLabel = new JLabel("Password:");
+        passLabel.setBounds(100, 130, 100, 20);
+        passLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        passLabel.setForeground(Color.BLACK);
+        add(passLabel);
+
+        JLabel emailLabel = new JLabel("Email:");
+        emailLabel.setBounds(100, 160, 100, 20);
+        emailLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        emailLabel.setForeground(Color.BLACK);
+        add(emailLabel);
+
+        // Buttons
+        JButton changeUsernameBtn = new JButton("Change Username");
+        changeUsernameBtn.setBounds(200, 100, 160, 20);
+        add(changeUsernameBtn);
+
+        JButton changePasswordBtn = new JButton("Change Password");
+        changePasswordBtn.setBounds(200, 130, 160, 20);
+        add(changePasswordBtn);
+
+        JButton changeEmailBtn = new JButton("Change Email");
+        changeEmailBtn.setBounds(200, 160, 160, 20);
+        add(changeEmailBtn);
+        
+        // Back button
+        JButton BackBtn = new JButton("Back");
+        BackBtn.setBounds(380, 250, 70, 20);
+        add(BackBtn);
+        
+        BackBtn.addActionListener(e -> {
+            dispose(); // Closes the current StudentInfoForm
+        });
+
+        // Add background last so it's behind all components
+        add(background);
     }
+
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,6 +138,10 @@ public class StudentInfoForm extends javax.swing.JFrame {
                 new StudentInfoForm().setVisible(true);
             }
         });
+    }
+
+    private void MainForm() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

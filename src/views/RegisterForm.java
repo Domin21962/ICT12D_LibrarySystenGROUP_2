@@ -36,63 +36,63 @@ public class RegisterForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
-        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/Register.png"));
+        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/REGESTER.png"));
         JLabel background = new JLabel(bgIcon);
         background.setBounds(0, 0, 1010, 540);
 
         JLabel userLabel = new JLabel("Username");
-        userLabel.setBounds(130, 180, 100, 20);
+        userLabel.setBounds(220, 180, 100, 20);
         userLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        userLabel.setForeground(Color.WHITE);
+        userLabel.setForeground(Color.BLACK);
         add(userLabel);
 
         usernameField = new JTextField();
-        usernameField.setBounds(130, 200, 240, 20);
+        usernameField.setBounds(220, 200, 200, 20);
         usernameField.setOpaque(false);
         usernameField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
-        usernameField.setForeground(Color.WHITE);
+        usernameField.setForeground(Color.BLACK);
         usernameField.setFont(new Font("Arial", Font.PLAIN, 12));
-        usernameField.setCaretColor(Color.WHITE);
+        usernameField.setCaretColor(Color.BLACK);
         add(usernameField);
 
         JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setBounds(130, 220, 100, 30);
+        emailLabel.setBounds(220, 220, 100, 30);
         emailLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        emailLabel.setForeground(Color.WHITE);
+        emailLabel.setForeground(Color.BLACK);
         add(emailLabel);
 
         emailField = new JTextField();
-        emailField.setBounds(130, 250, 240, 20);
+        emailField.setBounds(220, 250, 200, 20);
         emailField.setOpaque(false);
         emailField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
-        emailField.setForeground(Color.WHITE);
+        emailField.setForeground(Color.BLACK);
         emailField.setFont(new Font("Arial", Font.PLAIN, 12));
-        emailField.setCaretColor(Color.WHITE);
+        emailField.setCaretColor(Color.BLACK);
         add(emailField);
 
         JLabel passLabel = new JLabel("Password:");
-        passLabel.setBounds(430, 180, 70, 20);
-        passLabel.setForeground(Color.WHITE);
+        passLabel.setBounds(530, 180, 70, 20);
+        passLabel.setForeground(Color.BLACK);
         passLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         add(passLabel);
 
         passwordField = new JPasswordField();
-        passwordField.setBounds(430, 200, 240, 20);
+        passwordField.setBounds(530, 200, 200, 20);
         passwordField.setOpaque(false);
         passwordField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
-        passwordField.setForeground(Color.WHITE);
+        passwordField.setForeground(Color.BLACK);
         passwordField.setFont(new Font("Arial", Font.PLAIN, 12));
-        passwordField.setCaretColor(Color.WHITE);
+        passwordField.setCaretColor(Color.BLACK);
         add(passwordField);
 
         JLabel confirmPassLabel = new JLabel("Confirm Password:");
-        confirmPassLabel.setBounds(430, 220, 120, 30);
-        confirmPassLabel.setForeground(Color.WHITE);
+        confirmPassLabel.setBounds(530, 220, 120, 30);
+        confirmPassLabel.setForeground(Color.BLACK);
         confirmPassLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         add(confirmPassLabel);
 
         confirmPasswordField = new JPasswordField();
-        confirmPasswordField.setBounds(430, 240, 240, 30);
+        confirmPasswordField.setBounds(530, 240, 200, 30);
         confirmPasswordField.setOpaque(false);
         confirmPasswordField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(135, 206, 235)));
         confirmPasswordField.setForeground(Color.WHITE);
@@ -101,7 +101,7 @@ public class RegisterForm extends javax.swing.JFrame {
         add(confirmPasswordField);
 
         registerButton = new JButton("Register");
-        registerButton.setBounds(330, 385, 120, 30);
+        registerButton.setBounds(380, 315, 120, 30);
         registerButton.setFont(new Font("Arial", Font.BOLD, 13));
         registerButton.setBackground(new Color(0, 191, 255));
         registerButton.setForeground(Color.WHITE);
@@ -113,7 +113,7 @@ public class RegisterForm extends javax.swing.JFrame {
         add(registerButton);
 
         backButton = new JButton("Back");
-        backButton.setBounds(550, 385, 120, 30);
+        backButton.setBounds(550, 315, 120, 30);
         backButton.setFont(new Font("Arial", Font.BOLD, 13));
         backButton.setBackground(new Color(0, 191, 255));
         backButton.setForeground(Color.WHITE);
@@ -133,6 +133,7 @@ public class RegisterForm extends javax.swing.JFrame {
         backButton.addActionListener(e -> openLoginForm());
 
         add(background);
+        setResizable(false);
         setVisible(true);
     }
 
@@ -165,7 +166,14 @@ private void registerUser() {
     } else {
         JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
 }
+
+    private void openLoginForm() {
+        this.dispose(); // Close Login Form
+        LoginForm loginForm = new LoginForm(); // Create Register Form
+        loginForm.setVisible(true); // Open Register Form
+    }
 
 
 
@@ -330,9 +338,6 @@ private void registerUser() {
     private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 
-    private void openLoginForm() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     }
 

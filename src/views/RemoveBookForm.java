@@ -15,25 +15,44 @@ public class RemoveBookForm extends javax.swing.JFrame {
     private JTextField bookIdField;
     private JButton removeButton;
 
+
     /**
      * Creates new form RemoveBookForm
      */
     public RemoveBookForm() {
         setTitle("Remove Book");
-        setSize(300, 150);
-        setLayout(new FlowLayout());
+        setSize(300, 195);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Center the window
 
-        add(new JLabel("Book ID:"));
+        // Load and scale the background image
+        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/ARE.png"));
+        Image img = bgIcon.getImage().getScaledInstance(300, 165, Image.SCALE_SMOOTH);
+        JLabel background = new JLabel(new ImageIcon(img));
+        background.setLayout(null); // Absolute layout for precise positioning
+
+        // Create and position components
+        JLabel bookIdLabel = new JLabel("Book ID:");
+        bookIdLabel.setBounds(30, 70, 60, 25);
+        background.add(bookIdLabel);
+
         bookIdField = new JTextField(10);
-        add(bookIdField);
+        bookIdField.setBounds(90, 70, 100, 25);
+        background.add(bookIdField);
 
         removeButton = new JButton("Remove");
-        add(removeButton);
+        removeButton.setBounds(200, 70, 80, 25);
+        background.add(removeButton);
 
         removeButton.addActionListener(e -> removeBook());
 
+        setContentPane(background);
+        setResizable(false);
         setVisible(true);
     }
+
+    
+
 
     private void removeBook() {
         int bookId = Integer.parseInt(bookIdField.getText());

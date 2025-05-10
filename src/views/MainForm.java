@@ -17,7 +17,7 @@ import models.Book;
  */
 public class MainForm extends javax.swing.JFrame {
     private JTextField searchField;
-    private JButton searchButton, logoutButton, userInfoButton,addBookButton, removeBookButton;;
+    private JButton searchButton, logoutButton, userInfoButton,addBookButton, removeBookButton,barrowNreturnButton;;
     private JPanel  mainPanel;
     private String userRole;
 
@@ -36,14 +36,14 @@ public class MainForm extends javax.swing.JFrame {
         
         
         
-        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/NEW.png"));
+        ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/MEYSSS.png"));
         
         JLabel background = new JLabel();
         background.setIcon(bgIcon);
         background.setBounds(0, 0, 1027, 580); // Set to image size
 
-        userInfoButton = new JButton(" Infomation");
-        userInfoButton.setBounds(-10, 130, 190, 30);
+        userInfoButton = new JButton("Infomation");
+        userInfoButton.setBounds(-10, 131, 190, 30);
         userInfoButton.setFont(new Font("Arial", Font.BOLD, 13));
         userInfoButton.setForeground(new Color(221,221,221));
         userInfoButton.setBorderPainted(false);
@@ -53,8 +53,19 @@ public class MainForm extends javax.swing.JFrame {
         add(userInfoButton);
         userInfoButton.addActionListener(e -> new StudentInfoForm().setVisible(true));
         
+        barrowNreturnButton = new JButton("Barrow&Return");
+        barrowNreturnButton.setBounds(-10, 223, 190, 30);
+        barrowNreturnButton.setFont(new Font("Arial", Font.BOLD, 13));
+        barrowNreturnButton.setForeground(new Color(221,221,221));
+        barrowNreturnButton.setBorderPainted(false);
+        barrowNreturnButton.setContentAreaFilled(false);
+        barrowNreturnButton.setFocusPainted(false);
+        barrowNreturnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        add(barrowNreturnButton);
+        barrowNreturnButton.addActionListener(e -> new BarrowReturn().setVisible(true));
+        
         logoutButton = new JButton("Logout");
-        logoutButton.setBounds(40, 475, 100, 30);
+        logoutButton.setBounds(38, 465, 100, 30);
         logoutButton.setFont(new Font("Arial", Font.BOLD, 13));
         logoutButton.setForeground(new Color(221,221,221));
         logoutButton.setBorderPainted(false);
@@ -66,9 +77,9 @@ public class MainForm extends javax.swing.JFrame {
         
         // Search Bar
         searchField = new JTextField();
-        searchField.setBounds(824, 23, 124, 30);
-        searchField.setBackground(new Color(86,98,110));
-        searchField.setForeground(Color.WHITE);
+        searchField.setBounds(824, 24, 124, 30);
+        searchField.setBackground(new Color(255,255,255));
+        searchField.setForeground(Color.BLACK);
         searchField.setBorder(null);
         add(searchField);
 
@@ -81,9 +92,9 @@ public class MainForm extends javax.swing.JFrame {
 
         // Main Panel (For displaying books)
         mainPanel = new JPanel();
-        mainPanel.setBounds(172, 60, 851, 481);
-        mainPanel.setBackground(new Color(45, 49, 56));
-        add(mainPanel);
+        mainPanel.setBounds(166, 60, 862, 521);
+        mainPanel.setBackground(new Color(124,124,124));
+        add(mainPanel); 
         
         if (userRole.equals("Admin")) {
         addAdminControls();
@@ -104,10 +115,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         
         add(background);
-
+        setResizable(false);
         setVisible(true);
     }
     // Simulated search function
+
+    MainForm() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
     
@@ -123,10 +138,6 @@ public class MainForm extends javax.swing.JFrame {
         return "Student";
     }
     return "Unknown";
-    }
-
-    private MainForm() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void searchBook(String keyword) {
@@ -147,17 +158,17 @@ public class MainForm extends javax.swing.JFrame {
     } else {
         JPanel bookListPanel = new JPanel();
         bookListPanel.setLayout(new BoxLayout(bookListPanel, BoxLayout.Y_AXIS));
-        bookListPanel.setBackground(new Color(45, 49, 56));
+        bookListPanel.setBackground(new Color(153,153,153));
 
         for (Book book : books) {
     JPanel bookPanel = new JPanel();
     bookPanel.setLayout(new BoxLayout(bookPanel, BoxLayout.Y_AXIS));
-    bookPanel.setBackground(new Color(45, 49, 56));
+    bookPanel.setBackground(new Color(153,153,153));
     bookPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
     // 📌 Book ID Label
     JLabel idLabel = new JLabel("ID: " + book.getBookId());
-    idLabel.setForeground(Color.CYAN);  // Cyan color for better visibility
+    idLabel.setForeground(Color.WHITE);  // Cyan color for better visibility
     idLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
     // 📖 Title Label
@@ -167,14 +178,14 @@ public class MainForm extends javax.swing.JFrame {
 
     // ✍️ Author Label
     JLabel authorLabel = new JLabel("Author: " + book.getAuthor());
-    authorLabel.setForeground(Color.LIGHT_GRAY);
+    authorLabel.setForeground(Color.WHITE);
 
     // 📜 Content Area
     JTextArea contentArea = new JTextArea(book.getContent());
     contentArea.setLineWrap(true);
     contentArea.setWrapStyleWord(true);
     contentArea.setEditable(false);
-    contentArea.setBackground(new Color(50, 55, 60));
+    contentArea.setBackground(new Color(124,124,124));
     contentArea.setForeground(Color.WHITE);
 
     JScrollPane contentScrollPane = new JScrollPane(contentArea);
@@ -210,19 +221,19 @@ public class MainForm extends javax.swing.JFrame {
     addBookButton = new JButton("Add Book");
     addBookButton.setBounds(40, 400, 120, 30);
     addBookButton.setFont(new Font("Arial", Font.BOLD, 13));
-    addBookButton.setForeground(new Color(221, 221, 221));
-    addBookButton.setBorderPainted(false);
-    addBookButton.setContentAreaFilled(false);
+    addBookButton.setForeground(new Color(255,0,0));
+    addBookButton.setBorderPainted(true);
+    addBookButton.setContentAreaFilled(true);
     addBookButton.setFocusPainted(false);
     addBookButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     add(addBookButton);
 
     removeBookButton = new JButton("Remove Book");
-    removeBookButton.setBounds(40, 440, 120, 30);
+    removeBookButton.setBounds(40, 448, 120, 30);
     removeBookButton.setFont(new Font("Arial", Font.BOLD, 13));
-    removeBookButton.setForeground(new Color(221, 221, 221));
-    removeBookButton.setBorderPainted(false);
-    removeBookButton.setContentAreaFilled(false);
+    removeBookButton.setForeground(new Color(255,0,0));
+    removeBookButton.setBorderPainted(true);
+    removeBookButton.setContentAreaFilled(true);
     removeBookButton.setFocusPainted(false);
     removeBookButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
     add(removeBookButton);
@@ -262,6 +273,8 @@ public class MainForm extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel2.setBackground(new java.awt.Color(255, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(124, 124, 124));
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
@@ -275,8 +288,8 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, 120, -1));
 
         jLabel1.setForeground(new java.awt.Color(86, 98, 110));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\Main.png")); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, -1));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/MEYS.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1000, -1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
