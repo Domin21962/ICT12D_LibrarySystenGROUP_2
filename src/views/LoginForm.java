@@ -4,6 +4,7 @@
  */
 package views;
 
+import models.Session;
 import controllers.LoginController;
 import javax.swing.*;
 import java.awt.*;
@@ -118,9 +119,11 @@ public class LoginForm extends javax.swing.JFrame {
 
     LoginController controller = new LoginController();
     if (controller.loginUser(username, password)) {
+        String email = controller.getEmailByUsername(username); // You must implement this
+        Session.setCurrentUsername(username); // Save to session
         JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
-        new MainForm(username); // Pass the username to the main form
+        new MainForm(username); // Open main form
     } else {
         JOptionPane.showMessageDialog(this, "Invalid username or password!", "Error", JOptionPane.ERROR_MESSAGE);
     }

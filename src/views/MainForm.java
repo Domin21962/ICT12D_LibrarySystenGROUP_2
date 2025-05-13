@@ -20,6 +20,7 @@ public class MainForm extends javax.swing.JFrame {
     private JButton searchButton, logoutButton, userInfoButton,addBookButton, removeBookButton,barrowNreturnButton;;
     private JPanel  mainPanel;
     private String userRole;
+    
 
 
 
@@ -62,7 +63,7 @@ public class MainForm extends javax.swing.JFrame {
         barrowNreturnButton.setFocusPainted(false);
         barrowNreturnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(barrowNreturnButton);
-        barrowNreturnButton.addActionListener(e -> new BarrowReturn().setVisible(true));
+        barrowNreturnButton.addActionListener(e -> new BorrowReturn().setVisible(true));
         
         logoutButton = new JButton("Logout");
         logoutButton.setBounds(38, 465, 100, 30);
@@ -95,6 +96,7 @@ public class MainForm extends javax.swing.JFrame {
         mainPanel.setBounds(166, 60, 862, 521);
         mainPanel.setBackground(new Color(124,124,124));
         add(mainPanel); 
+        
         
         if (userRole.equals("Admin")) {
         addAdminControls();

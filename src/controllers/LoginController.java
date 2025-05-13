@@ -7,6 +7,7 @@ package controllers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import database.DatabaseConnection;
 /**
  *
@@ -27,7 +28,21 @@ public class LoginController {
         return false;
     }
 }
-
+        public String getEmailByUsername(String username) {
+        String email = "";
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "SELECT email FROM users WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                email = rs.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return email;
+    }
     public boolean authenticateUser(String username, String password) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
