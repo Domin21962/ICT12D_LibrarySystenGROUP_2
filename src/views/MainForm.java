@@ -146,7 +146,7 @@ public class MainForm extends javax.swing.JFrame {
      BookController bookController = new BookController();
     ArrayList<Book> books = bookController.searchBooks(keyword);
     
-    System.out.println("🔍 Books Found in searchBook(): " + books.size());
+    System.out.println(" Books Found in searchBook(): " + books.size());
 
     mainPanel.removeAll(); // Clear previous content
     mainPanel.setLayout(new BorderLayout());
@@ -168,21 +168,21 @@ public class MainForm extends javax.swing.JFrame {
     bookPanel.setBackground(new Color(153,153,153));
     bookPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-    // 📌 Book ID Label
+    //  Book ID Label
     JLabel idLabel = new JLabel("ID: " + book.getBookId());
     idLabel.setForeground(Color.WHITE);  // Cyan color for better visibility
     idLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-    // 📖 Title Label
+    //  Title Label
     JLabel titleLabel = new JLabel("Title: " + book.getTitle());
     titleLabel.setForeground(Color.WHITE);
     titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
-    // ✍️ Author Label
+    //️ Author Label
     JLabel authorLabel = new JLabel("Author: " + book.getAuthor());
     authorLabel.setForeground(Color.WHITE);
 
-    // 📜 Content Area
+    //  Content Area
     JTextArea contentArea = new JTextArea(book.getContent());
     contentArea.setLineWrap(true);
     contentArea.setWrapStyleWord(true);
@@ -195,7 +195,7 @@ public class MainForm extends javax.swing.JFrame {
     contentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     contentScrollPane.getVerticalScrollBar().setUnitIncrement(16); // Smooth scrolling
 
-    // 🏗️ Add components to book panel
+    // Add components to book panel
     bookPanel.add(idLabel);
     bookPanel.add(titleLabel);
     bookPanel.add(authorLabel);

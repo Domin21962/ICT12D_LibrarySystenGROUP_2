@@ -4,20 +4,19 @@
  */
 package views;
 
+
 import models.Session;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.*;
-import java.util.ArrayList;
 
 /**
  *
  * @author User
  */
 public class BorrowReturn extends javax.swing.JFrame {
-   private JTextField bookIdField, emailField;
+    private JTextField bookIdField, emailField;
     private JButton borrowButton, returnButton;
     private JTextArea recordsArea;
     /**
@@ -36,7 +35,7 @@ public class BorrowReturn extends javax.swing.JFrame {
 
         add(new JLabel("Username:"));
         emailField = new JTextField(20);
-        emailField.setText(Session.getCurrentUsername()); // Get from session
+        emailField.setText(Session.getCurrentUsername()); // From session
         emailField.setEditable(false);
         add(emailField);
 
@@ -52,32 +51,32 @@ public class BorrowReturn extends javax.swing.JFrame {
         borrowButton.addActionListener(e -> borrowBook());
         returnButton.addActionListener(e -> returnBook());
 
-        updateRecordsDisplay(); // load user's history
+        updateRecordsDisplay(); // Show history at start
         setVisible(true);
     }
 
     private void borrowBook() {
-        String bookId = bookIdField.getText().trim();
+        String bookIdStr = bookIdField.getText().trim();
         String username = emailField.getText().trim();
 
-        if (bookId.isEmpty()) {
+        if (bookIdStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a book ID.");
             return;
         }
 
+        int bookId;
+        try {
+            bookId = Integer.parseInt(bookIdStr);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid book ID. Must be a number.");
+            return;
+        }
+
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "")) {
-            // Check if the book is already borrowed and not returned
             String checkQuery = "SELECT * FROM borrow_return WHERE book_id = ? AND return_date IS NULL";
             PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
-            checkStmt.setInt(1, Integer.parseInt(bookId));
+            checkStmt.setInt(1, bookId);
             ResultSet rs = checkStmt.executeQuery();
-            try {
-                int bookIdInt = Integer.parseInt(bookId);
-                // continue with query
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Invalid book ID. It must be a number.");
-                return;
-            }
 
             if (rs.next()) {
                 JOptionPane.showMessageDialog(this, "This book is already borrowed.");
@@ -85,10 +84,11 @@ public class BorrowReturn extends javax.swing.JFrame {
                 String insertQuery = "INSERT INTO borrow_return (username, book_id, borrow_date) VALUES (?, ?, NOW())";
                 PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
                 insertStmt.setString(1, username);
-                insertStmt.setInt(2, Integer.parseInt(bookId));
+                insertStmt.setInt(2, bookId);
                 insertStmt.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Book borrowed successfully.");
             }
+
             updateRecordsDisplay();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -97,32 +97,40 @@ public class BorrowReturn extends javax.swing.JFrame {
     }
 
     private void returnBook() {
-        String bookId = bookIdField.getText().trim();
+        String bookIdStr = bookIdField.getText().trim();
         String username = emailField.getText().trim();
 
-        if (bookId.isEmpty()) {
+        if (bookIdStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a book ID.");
             return;
         }
 
+        int bookId;
+        try {
+            bookId = Integer.parseInt(bookIdStr);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid book ID. Must be a number.");
+            return;
+        }
+
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "")) {
-            // Check if user borrowed this book and it's not returned yet
             String checkQuery = "SELECT * FROM borrow_return WHERE username = ? AND book_id = ? AND return_date IS NULL";
             PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
             checkStmt.setString(1, username);
-            checkStmt.setInt(2, Integer.parseInt(bookId));
+            checkStmt.setInt(2, bookId);
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
                 String updateQuery = "UPDATE borrow_return SET return_date = NOW() WHERE username = ? AND book_id = ? AND return_date IS NULL";
                 PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
                 updateStmt.setString(1, username);
-                updateStmt.setInt(2, Integer.parseInt(bookId));
+                updateStmt.setInt(2, bookId);
                 updateStmt.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Book returned successfully.");
             } else {
                 JOptionPane.showMessageDialog(this, "You haven’t borrowed this book or already returned it.");
             }
+
             updateRecordsDisplay();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -135,9 +143,11 @@ public class BorrowReturn extends javax.swing.JFrame {
         recordsArea.setText("");
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "")) {
-            String query = "SELECT b.title, br.borrow_date, br.return_date FROM borrow_return br " +
-                           "JOIN books b ON br.book_id = b.book_id " +
-                           "WHERE br.username = ? ORDER BY br.borrow_date DESC";
+            String query = "SELECT b.title, br.borrow_date, br.return_date " +
+                           "FROM borrow_return br " +
+                           "JOIN book b ON br.book_id = b.book_id " +
+                           "WHERE br.username = ? " +
+                           "ORDER BY br.borrow_date DESC";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, username);
 
@@ -156,6 +166,7 @@ public class BorrowReturn extends javax.swing.JFrame {
             recordsArea.setText("Error loading borrow history.");
         }
     }
+
 
 
     

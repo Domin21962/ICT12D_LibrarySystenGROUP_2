@@ -24,7 +24,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         setTitle("Login");
-        setSize(1027, 580); // Match image size
+        setSize(1010, 540); // Match image size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null); 
