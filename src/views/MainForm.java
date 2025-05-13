@@ -221,7 +221,7 @@ public class MainForm extends javax.swing.JFrame {
 }
     private void addAdminControls() {
     addBookButton = new JButton("Add Book");
-    addBookButton.setBounds(40, 400, 120, 30);
+    addBookButton.setBounds( 20, 323, 120, 30);
     addBookButton.setFont(new Font("Arial", Font.BOLD, 13));
     addBookButton.setForeground(new Color(255,0,0));
     addBookButton.setBorderPainted(true);
@@ -231,7 +231,7 @@ public class MainForm extends javax.swing.JFrame {
     add(addBookButton);
 
     removeBookButton = new JButton("Remove Book");
-    removeBookButton.setBounds(40, 448, 120, 30);
+    removeBookButton.setBounds(20, 383, 120, 30);
     removeBookButton.setFont(new Font("Arial", Font.BOLD, 13));
     removeBookButton.setForeground(new Color(255,0,0));
     removeBookButton.setBorderPainted(true);
