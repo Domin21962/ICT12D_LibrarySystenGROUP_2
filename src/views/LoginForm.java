@@ -18,7 +18,7 @@ public class LoginForm extends javax.swing.JFrame {
     private JPasswordField passwordField;
     private JButton loginButton, registerButton;
 
-    
+    //1
     /**
      * Creates new form LoginForm
      */
