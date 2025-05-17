@@ -31,6 +31,12 @@ public class RemoveBookForm extends javax.swing.JFrame {
         Image img = bgIcon.getImage().getScaledInstance(300, 165, Image.SCALE_SMOOTH);
         JLabel background = new JLabel(new ImageIcon(img));
         background.setLayout(null); // Absolute layout for precise positioning
+        
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Create and position components
         JLabel bookIdLabel = new JLabel("Book ID:");

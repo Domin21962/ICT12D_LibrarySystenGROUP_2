@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import models.Session;
 
 /**
  *
@@ -34,37 +37,41 @@ public class StudentInfoForm extends javax.swing.JFrame {
         background.setBounds(0, 0, 510, 355); // Set to image size
         
         // Labels
-        JLabel userLabel = new JLabel("Username:");
-        userLabel.setBounds(100, 100, 100, 20);
-        userLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        userLabel.setForeground(Color.BLACK);
-        add(userLabel);
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setBounds(100, 100, 80, 25);
+        add(usernameLabel);
 
-        JLabel passLabel = new JLabel("Password:");
-        passLabel.setBounds(100, 130, 100, 20);
-        passLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        passLabel.setForeground(Color.BLACK);
-        add(passLabel);
+        JTextField usernameField = new JTextField(20);
+        usernameField.setText(Session.getCurrentUsername()); // From session
+        usernameField.setEditable(false);
+        usernameField.setBounds(200, 100, 160, 25);
+        add(usernameField);
 
+        // Email label and field
         JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setBounds(100, 160, 100, 20);
-        emailLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        emailLabel.setForeground(Color.BLACK);
+        emailLabel.setForeground(Color.WHITE);
+        emailLabel.setBounds(100, 130, 80, 25);
         add(emailLabel);
 
-        // Buttons
-        JButton changeUsernameBtn = new JButton("Change Username");
-        changeUsernameBtn.setBounds(200, 100, 160, 20);
-        add(changeUsernameBtn);
+        JTextField emailField = new JTextField(20);
+        emailField.setText(Session.getCurrentEmail()); // From session
+        emailField.setEditable(false);
+        emailField.setBounds(200, 130, 160, 25);
+        add(emailField);
 
-        JButton changePasswordBtn = new JButton("Change Password");
-        changePasswordBtn.setBounds(200, 130, 160, 20);
-        add(changePasswordBtn);
+        // Password label and field
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setBounds(100, 160, 80, 25);
+        add(passwordLabel);
 
-        JButton changeEmailBtn = new JButton("Change Email");
-        changeEmailBtn.setBounds(200, 160, 160, 20);
-        add(changeEmailBtn);
-        
+        JPasswordField passwordField = new JPasswordField(20);
+        passwordField.setText("********"); // Masked, safer than showing real password
+        passwordField.setEditable(false);
+        passwordField.setBounds(200, 160, 160, 25);
+        add(passwordField);
+
         // Back button
         JButton BackBtn = new JButton("Back");
         BackBtn.setBounds(380, 250, 70, 20);

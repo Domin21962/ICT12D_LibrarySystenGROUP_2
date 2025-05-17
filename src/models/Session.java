@@ -10,13 +10,26 @@ package models;
  */
 public class Session {
     
-     private static String currentUsername;
+     private static String currentUsername, currentPassword,currentEmail;
 
     public static void setCurrentUsername(String username) {
         currentUsername = username;
+    }
+    public static void setCurrentEmail(String email) {
+        currentEmail = email;
+    }
+    public static void setCurrentPassword(String password) {
+        currentPassword = password;
     }
 
     public static String getCurrentUsername() {
         return currentUsername;
     }
+    public static String getCurrentEmail() {
+        return currentPassword;
+    }
+    public static String getCurrentPassword() {
+        return currentEmail;
+    }
+    
 }

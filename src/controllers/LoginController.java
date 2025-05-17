@@ -20,9 +20,8 @@ public class LoginController {
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, username);
         stmt.setString(2, password);
-
         ResultSet rs = stmt.executeQuery();
-        return rs.next(); // Returns true if a user exists with the username & password
+        return rs.next(); // Returns true if a user exists
     } catch (Exception e) {
         e.printStackTrace();
         return false;

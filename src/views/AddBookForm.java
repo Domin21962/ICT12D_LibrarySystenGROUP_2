@@ -37,6 +37,12 @@ public class AddBookForm extends javax.swing.JFrame {
 
         Color borderColor = new Color(0, 102, 153); // Dark blue
         Color textColor = Color.WHITE;
+        
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Title
         titleField = createStyledTextField(200, 126, 250, 20, borderColor, textColor);
@@ -70,7 +76,7 @@ public class AddBookForm extends javax.swing.JFrame {
 
         // Add Button
         addButton = new JButton("Add Book");
-        addButton.setBounds(430, 400, 10, 40);
+        addButton.setBounds(430, 410, 100, 40);
         addButton.setFont(new Font("Arial", Font.BOLD, 12));
         addButton.setForeground(Color.WHITE);
         addButton.setBackground(new Color(0, 51, 102));

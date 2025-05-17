@@ -35,7 +35,11 @@ public class MainForm extends javax.swing.JFrame {
         setLayout(null);
         getContentPane().setBackground(new Color(40, 44, 52)); // Background color
         
-        
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         ImageIcon bgIcon = new ImageIcon(getClass().getResource("/Image/MEYSSS.png"));
         
@@ -111,10 +115,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        logoutButton.addActionListener(e -> {
-            this.dispose();
-            new LoginForm();
-        });
+        logoutButton.addActionListener(e -> openLoginForm());
         
         add(background);
         setResizable(false);
@@ -241,10 +242,24 @@ public class MainForm extends javax.swing.JFrame {
     add(removeBookButton);
 
     // Event Listeners
-    addBookButton.addActionListener(e -> new AddBookForm().setVisible(true));
-    removeBookButton.addActionListener(e -> new RemoveBookForm().setVisible(true));
+    addBookButton.addActionListener(e -> new AddBookForm());
+    removeBookButton.addActionListener(e -> new RemoveBookForm());
 }
-
+        private void openLoginForm() {
+        this.dispose(); // Close Login Form
+        LoginForm loginForm = new LoginForm(); // Create Register Form
+        loginForm.setVisible(true); // Open Register Form
+    }
+        private void openAddBookForm() {
+        this.dispose(); // Close Login Form
+        AddBookForm addBookForm = new AddBookForm(); // Create Register Form
+        addBookForm.setVisible(true); // Open Register Form
+        }
+        private void openRemoveBookForm() {
+        this.dispose(); // Close Login Form
+        RemoveBookForm removeBookForm = new RemoveBookForm(); // Create Register Form
+        removeBookForm.setVisible(true); // Open Register Form
+        }
 
     
     

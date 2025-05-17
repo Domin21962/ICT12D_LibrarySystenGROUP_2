@@ -108,7 +108,7 @@ public class LoginForm extends javax.swing.JFrame {
         // Login Button Action
         loginButton.addActionListener(e -> loginUser());
 
-        add(background);
+        getContentPane().add(background, Integer.valueOf(Integer.MIN_VALUE));
         setResizable(false);
         setVisible(true);
     }
@@ -116,7 +116,11 @@ public class LoginForm extends javax.swing.JFrame {
     private void loginUser() {
     String username = usernameField.getText();
     String password = new String(passwordField.getPassword());
-
+    
+    if (username.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter both username and password.", "Missing Fields", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
     LoginController controller = new LoginController();
     if (controller.loginUser(username, password)) {
         String email = controller.getEmailByUsername(username); // You must implement this
